@@ -1,5 +1,5 @@
 #include "push_swap.h"
-
+#include<stdio.h>
 void	error(void)
 {
 	ft_putstr_fd("Error\n", 2);
@@ -16,7 +16,7 @@ int	bs(int index, int lb, int rb, int *lis)
 		if (*(lis + mid) == index)
 			return (1);
 		else if (*(lis + mid) > index)
-			rb = mid;
+			rb = mid - 1;
 		else
 			lb = mid + 1;
 	}

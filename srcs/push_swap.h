@@ -6,7 +6,7 @@
 /*   By: jeonghak <rlawjdgks318@naver.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 12:49:53 by jeonghak          #+#    #+#             */
-/*   Updated: 2022/04/27 11:08:31 by jeonghak         ###   ########.fr       */
+/*   Updated: 2022/04/28 19:53:05 by jeonghak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,11 @@ void	parse_argv(char **argv, t_deque *dequeue);
 *****************************     SORT DEQUE     ******************************
 */
 
+int		cal_lis(int i, int index, int *lis, t_deque *a);
+
+void	make_lis(t_deque *a, int *lis, int *i_arr, int end_index);
+void	sort_a(t_deque *a, t_deque *b);
 void	sort_deque(t_deque *a, t_deque *b);
-void	make_lis(int *lis, t_deque *a);
 
 /*
 *****************************        UTILS       ******************************

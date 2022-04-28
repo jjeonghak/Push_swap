@@ -1,34 +1,53 @@
 #include "push_swap.h"
-
+#include<stdio.h>
 static int	cal_dest(t_deque *b, int index)
 {
 	int		cnt;
-	t_dlist	*temp;
+	int		min_cnt;
+	t_dlist *temp;
+	t_dlist	*min_index;
 
 	cnt = 0;
-	temp = b->head;
-	while (temp)
+	temp = b->tail;
+	min_index = b->tail;
+	while (cnt < b->size)
 	{
-		if (temp->index < index)
-			break ;
-		temp = temp->next;
+		if (temp->index <= min_index->index)
+		{
+			min_index = temp;
+			min_cnt = cnt;
+		}
+		temp = temp->previous;
 		cnt++;
 	}
-	return (cnt);
+	cnt = 0;
+	while (cnt < b->size)
+	{
+		if (min_index->index > index)
+			break ;
+		else if (min_index->previous == NULL)
+			min_index = b->tail;
+		else
+			min_index = min_index->previous;
+		cnt++;
+	}
+	return ((cnt + min_cnt) % b->size);
 }
 
 static void	cal_pb(t_deque *b, int index)
 {
 	int	dest;
 	int	cnt_r;
-
-	dest = cal_dest(b, index);
+	
+	dest = 0;
+	if (b->size != 0)
+		dest = cal_dest(b, index);
 	cnt_r = b->size - dest;
 	if (cnt_r > dest)
 	{
 		while (dest)
 		{
-			rrb(b);
+			rb(b);
 			dest--;
 		}
 	}
@@ -36,45 +55,34 @@ static void	cal_pb(t_deque *b, int index)
 	{
 		while (cnt_r)
 		{
-			rb(b);
+			rrb(b);
 			cnt_r--;
 		}
 	}
 	return ;
 }
 
-static void	sort_b(t_deque *a, t_deque *b, int *lis)
+static void	sort_b(t_deque *a, t_deque *b, int end_index, int *lis)
 {
-	int		rb;
+	int		cnt;
 	t_dlist	*temp;
 
-	rb = a->size - 1;
-	temp = a->head;
-	while (temp)
+	cnt = a->size;
+	temp = a->tail;
+	while (cnt)
 	{
-		if (!bs(temp->index, 0, rb, lis))
+		if (!bs(temp->index, 0, end_index, lis))
 		{
 			cal_pb(b, temp->index);
+			temp = temp->previous;
 			pb(a, b);
 		}
 		else
-			ra(a);
-		temp = temp->next;
-	}
-	return ;
-}
-
-static void	sort_a(t_deque *a, t_deque *b)
-{
-	while (b->size != 0)
-	{
-		if (b->tail->index < a->tail->index)
 		{
-			pa(a, b);
+			temp = temp->previous;
 			ra(a);
 		}
-		else
-			ra(a);
+		cnt--;
 	}
 	return ;
 }
@@ -82,10 +90,16 @@ static void	sort_a(t_deque *a, t_deque *b)
 void	sort_deque(t_deque *a, t_deque *b)
 {
 	int	*lis;
+	int	*i_arr;
+	int	end_index;
 
-	make_lis(lis, a);
-	sort_b(a, b, lis);
+	i_arr = (int *)malloc(sizeof(int) * a->size);
+	end_index = cal_lis(-1, 0, i_arr, a);
+	lis = (int *)malloc(sizeof(int) * end_index);
+	make_lis(a, lis, i_arr, end_index);
+	free(i_arr);
+	sort_b(a, b, end_index, lis);
 	free(lis);
-	sort_a(a, b);
+	//sort_a(a, b);
 	return ;
 }

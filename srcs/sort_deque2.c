@@ -1,21 +1,20 @@
 #include "push_swap.h"
-
-static void	init(int *lis, int *arr, t_deque *a)
+#include<stdio.h>
+static void	init(int *arr, int *lis, int *i_arr, t_deque *a)
 {
 	int		i;
 	t_dlist	*temp;
 
 	i = 0;
+	*(i_arr) = 0;
 	temp = a->tail;
-	lis = (int *)malloc(sizeof(int) * a->size);
-	arr = (int *)malloc(sizeof(int) * a->size);
 	while (i != a->size)
 	{
-		*(lis + i) = 0;
 		*(arr + i) = temp->index;
 		temp = temp->previous;
 		i++;
 	}
+	*lis = *arr;
 	return ;
 }
 
@@ -38,31 +37,53 @@ static int	upper_bound(int *lis, int target, int size)
 	return (end);
 }
 
-void	make_lis(int *lis, t_deque *a)
+int	cal_lis(int i, int index, int *i_arr, t_deque *a)
 {
-	int	i;
-	int	j;
-	int	k;
+	int	upper_index;
+	int	*lis;
 	int	*arr;
 
-	init(lis, arr, a);
-	i = 0;
-	j = 0;
-	*(lis + i) = *(arr + i);
-	i++;
-	while (i < a->size)
+	arr = (int *)malloc(sizeof(int) * a->size);
+	lis = (int *)malloc(sizeof(int) * a->size);
+	init(arr, lis, i_arr, a);
+	while (++i < a->size)
 	{
-		if (*(lis + j) < *(arr + i))
+		if (*(lis + index) < *(arr + i))
 		{
-			j++;
-			*(lis + j) = *(arr + i);
+			index++;
+			*(lis + index) = *(arr + i);
+			*(i_arr + i) = index;
 		}
 		else
 		{
-			k = upper_bound(arr, *(arr + i), j);
-			*(lis + k) = *(arr + i);
+			upper_index = upper_bound(lis, *(arr + i), index);
+			*(lis + upper_index) = *(arr + i);
+			*(i_arr + i) = upper_index;
 		}
-		i++;
+	}
+	free(lis);
+	free(arr);
+	return (index);
+}
+
+void	make_lis(t_deque *a, int *lis, int *i_arr, int end_index)
+{
+	int		i;
+	int		index;
+	t_dlist	*temp;
+
+	i = a->size - 1;
+	index = end_index;
+	temp = a->head;
+	while (temp)
+	{
+		if (index == *(i_arr + i))
+		{
+			*(lis + index) = temp->index;
+			index--;
+		}
+		temp = temp->next;
+		i--;
 	}
 	return ;
 }

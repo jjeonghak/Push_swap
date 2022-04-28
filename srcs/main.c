@@ -10,6 +10,7 @@ static void	init_deque(t_deque *a, t_deque *b)
 	b->tail = NULL;
 	return ;
 }
+
 int	main(int argc, char **argv)
 {
 	t_deque	a;
@@ -21,10 +22,25 @@ int	main(int argc, char **argv)
 		parse_argv(argv, &a);
 		if (a.size > 0)
 		{
-			//sort_deque(a, b);
+			sort_deque(&a, &b);
+			
+			t_dlist *temp;
+			temp = a.tail;
+			while (temp)
+			{
+				printf("a: %d\n", temp->index);
+				temp = temp->previous;
+			}
+			
+			temp = b.tail;
+			while (temp)
+			{
+				printf("b: %d\n", temp->index);
+				temp = temp->previous;
+			}
 			ft_clear(&a);
+			ft_clear(&b);
 		}
 	}
-	while (1);
 	return (0);
 }
