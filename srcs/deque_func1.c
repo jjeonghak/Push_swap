@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   deque_func.c                                       :+:      :+:    :+:   */
+/*   deque_func1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jeonghak <rlawjdgks318@naver.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 12:42:32 by jeonghak          #+#    #+#             */
-/*   Updated: 2022/03/08 12:42:41 by jeonghak         ###   ########.fr       */
+/*   Updated: 2022/04/29 13:01:19 by jeonghak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ void	ft_push_front(t_deque *dequeue, int value)
 			dequeue->head->previous = node;
 		}
 		else
+		{
+			node->next = NULL;
 			dequeue->tail = node;
+		}
 		dequeue->head = node;
 		dequeue->size += 1;
 	}
@@ -53,7 +56,10 @@ void	ft_push_back(t_deque *dequeue, int value)
 			dequeue->tail->next = node;
 		}
 		else
+		{
+			node->previous = NULL;
 			dequeue->head = node;
+		}
 		dequeue->tail = node;
 		dequeue->size += 1;
 	}

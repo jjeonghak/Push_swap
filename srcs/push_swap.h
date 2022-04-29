@@ -6,7 +6,7 @@
 /*   By: jeonghak <rlawjdgks318@naver.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 12:49:53 by jeonghak          #+#    #+#             */
-/*   Updated: 2022/04/28 19:53:05 by jeonghak         ###   ########.fr       */
+/*   Updated: 2022/04/29 11:08:04 by jeonghak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int		cal_lis(int i, int index, int *lis, t_deque *a);
 void	make_lis(t_deque *a, int *lis, int *i_arr, int end_index);
 void	sort_a(t_deque *a, t_deque *b);
 void	sort_deque(t_deque *a, t_deque *b);
+
+t_dlist	*find_min(t_deque *b, int *min_cnt);
 
 /*
 *****************************        UTILS       ******************************

@@ -24,20 +24,16 @@ int	main(int argc, char **argv)
 		{
 			sort_deque(&a, &b);
 			
-			t_dlist *temp;
+			t_dlist	*temp;
 			temp = a.tail;
+			printf("\n\na tail\n");
 			while (temp)
 			{
-				printf("a: %d\n", temp->index);
+				printf("%d \n", temp->index);
 				temp = temp->previous;
 			}
-			
-			temp = b.tail;
-			while (temp)
-			{
-				printf("b: %d\n", temp->index);
-				temp = temp->previous;
-			}
+			printf("a head\n\n");
+		
 			ft_clear(&a);
 			ft_clear(&b);
 		}

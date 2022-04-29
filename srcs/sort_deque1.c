@@ -1,11 +1,10 @@
 #include "push_swap.h"
 #include<stdio.h>
-static int	cal_dest(t_deque *b, int index)
+t_dlist	*find_min(t_deque *b, int *min_cnt)
 {
 	int		cnt;
-	int		min_cnt;
-	t_dlist *temp;
-	t_dlist	*min_index;
+	t_dlist	*temp;
+	t_dlist *min_index;
 
 	cnt = 0;
 	temp = b->tail;
@@ -15,12 +14,22 @@ static int	cal_dest(t_deque *b, int index)
 		if (temp->index <= min_index->index)
 		{
 			min_index = temp;
-			min_cnt = cnt;
+			*min_cnt = cnt;
 		}
 		temp = temp->previous;
 		cnt++;
 	}
+	return (min_index);
+}
+
+static int	cal_dest(t_deque *b, int index)
+{
+	int		cnt;
+	int		min_cnt;
+	t_dlist	*min_index;
+
 	cnt = 0;
+	min_index = find_min(b, &min_cnt);
 	while (cnt < b->size)
 	{
 		if (min_index->index > index)
@@ -100,6 +109,6 @@ void	sort_deque(t_deque *a, t_deque *b)
 	free(i_arr);
 	sort_b(a, b, end_index, lis);
 	free(lis);
-	//sort_a(a, b);
+	sort_a(a, b);
 	return ;
 }
